@@ -17,16 +17,18 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>归档: 2022 | 柚子想睡觉</title>
+  <title>Repositories | 柚子想睡觉</title>
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2022/index.html">
+<meta property="og:title" content="Repositories">
+<meta property="og:url" content="http://example.com/repository/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-11T08:38:04.211Z">
+<meta property="article:modified_time" content="2022-03-11T08:38:04.211Z">
 <meta property="article:author" content="wyq">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/archives/2022/index.html">
+  <link rel="canonical" href="http://example.com/repository/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -43,7 +45,7 @@
 <meta name="generator" content="Hexo 5.4.1"></head>
 
 
-<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+<body class="main-center theme-black no-sidebar" itemscope itemtype="http://schema.org/WebPage">
   <header class="header" itemscope itemtype="http://schema.org/WPHeader">
   <div class="slimContent">
     <div class="navbar-header">
@@ -287,70 +289,46 @@
 </aside>
 
   
-  
-<main class="main" role="main">
-  	<article class="content article article-archives article-type-list" itemscope="">
-	    <header class="article-header">
-	      <h1 itemprop="title">归档: 2022</h1>
-	      <p class="text-muted">共 3 篇文章</p>
-	    </header>
-	    <div class="article-body">
-	      
-  
-  
-    
-    
-      
-      
-      <section class="panel panel-default b-no">
-        <div class="panel-heading" role="tab">
-          <h3 class="panel-title">
-            <a data-toggle="collapse" href="#collapse2022" aria-expanded="true">
-              <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
-              2022
-            </a>
-            <!-- <a href="/archives/2022" class="archive-year">2022</a> -->
-          </h3>
-        </div>
-        <div id="collapse2022" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2022">
-        <div class="panel-body">
-          <div class="collection">
-    
-    
-<a href="/2022/05/18/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%90%8E%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="collection-item"   itemprop="url">
-  <time datetime="2022-05-18T06:47:06.000Z" itemprop="datePublished">2022-05-18</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> hexo搭建博客后图片无法显示的解决办法
-</a>
-
+  <main class="main" role="main">
+  <article class="article article-repository article-type-list" itemscope="">
+  <header class="article-header">
+    <h1 itemprop="title">Repositories</h1>
+    <p class="text-muted">I have <span id="repo-count">0</span> projects on Github</p>
+  </header>
+  <div class="article-body">
+    <div class="repo-content">
+      <div class="blankslate">
+        <p>正在加载...</p>
+      </div>
+    </div>
+  </div>
+</article>
 
   
-    
-    
-    
-<a href="/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" class="collection-item"   itemprop="url">
-  <time datetime="2022-05-18T02:20:02.000Z" itemprop="datePublished">2022-05-18</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> vue3环境搭建及项目搭建
-</a>
 
 
-  
-    
-    
-    
-<a href="/2022/03/11/Mac%20OS%E4%B8%8A%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E7%A8%8B/" class="collection-item"   itemprop="url">
-  <time datetime="2022-03-11T06:04:22.546Z" itemprop="datePublished">2022-03-11</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> Mac OS上搭建Hexo博客流程
-</a>
 
-
-  
-  
-    </div></div></div></section>
-  
-
-	    </div>
-  	</article>
-  	 	
+<!--Github项模版-->
+<script type="text/template" id="list-template">
+  <li class="col-sm-6 col-md-6 col-lg-4">
+    <div class="repo hover-shadow hover-grow">
+      <div class="repo-image geopattern" data-pattern-id="{%=name%}"></div>
+      <h3 class="repo-title"><a href="{%=clone_url%}" target="_blank" rel="external nofollow noopener noreferrer">{%=full_name%}</a></h3>
+      <p class="repo-body">{%=description%}</p>
+      <div class="repo-meta">
+        <span class="meta meta-type pull-left" aria-label="{%=language%} project">{%=language%}</span>
+        <span class="meta meta-star" aria-label="{%=stargazers_count%} stars"><i class="icon icon-star-fill"></i> {%=stargazers_count%}</span>
+        <span class="meta meta-fork" aria-label="{%=forks_count%} forks"><i class="icon icon-code-fork"></i> {%=forks_count%}</span>
+        <span class="meta meta-last-updated" aria-label="最后更新时间：{%=updated_at%}">
+        <i class="icon icon-clock"></i> <time datetime="{%=updated_at%}">{%=updated_at%}</time></span>
+      </div>
+    </div>
+  </li>
+</script>
+<!--获取失败模版-->
+<script type="text/template" id="error-template">
+  <h3>加载失败</h3><p>请刷新或稍后再试...</p>
+</script>
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -404,6 +382,60 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 <script src="/js/insight.js"></script>
 
 
+
+
+   <script type="text/javascript">
+var open = function() {
+  var baiduTpl = new Object();
+  var handleTpl = function() {
+    baiduTpl.list = baidu.template("list-template");
+    baiduTpl.error = baidu.template("error-template");
+  };
+
+  var handleGithub = function() {
+    var repoContainer = $('.repo-content');
+    var errorContainer = repoContainer.find(".blankslate");
+    var countContainer = $("#repo-count");
+
+    $.get("https://api.github.com/users/DxsHello/repos", function(result) {
+      if (result) {
+        errorContainer.remove();
+        countContainer.text(result.length); //设置项目个数
+        var ul = $("<ul class='repo-list row clearfix'></ul>");
+        result.sort(function(a, b) {
+          return new Date(b.updated_at) - new Date(a.updated_at)
+        }).sort(function(a, b) {
+          var a_start = a.stargazers_count;
+          var b_start = b.stargazers_count;
+          if (a.fork) a_start * 0.5;
+          if (b.fork) b_start * 0.5;
+          return b_start - a_start;
+        }).map(function(repo) {
+          if (!repo.description) repo.description = "";
+          repo.updated_at = repo.updated_at.substring(0, repo.updated_at.lastIndexOf("T"));
+          var html = baiduTpl.list(repo);
+          ul.append(html);
+        })
+
+        repoContainer.append(ul);
+        $(".geopattern").each(function() {
+          $(this).geopattern($(this).data('pattern-id'));
+        });
+      } else {
+        errorContainer.append(baiduTpl.error());
+      }
+    });
+  };
+
+  return {
+    init: function() {
+      handleTpl();
+      handleGithub();
+    }
+  }
+};
+$(open().init);
+</script>
 
 
 

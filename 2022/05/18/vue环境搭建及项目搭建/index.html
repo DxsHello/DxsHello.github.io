@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>vue3环境搭建及项目搭建 | 柚子想睡觉</title>
+  <meta name="description" content="1. 安装node.js安装完毕之后，执行一下命令查看node版本： node -v 2. npmnpm是随同nodejs一起安装的包管理工具，能解决nodejs代码部署上的很多问题； 可以通过输入 npm -v 来测试是否安装成功 3. 创建vue项目 使用 npm 全局安装 vue-cli(最新) 1npm install -g @vue&#x2F;cli 查看现在的版本 1vue -V 创建一个项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue3环境搭建及项目搭建">
+<meta property="og:url" content="http://example.com/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 安装node.js安装完毕之后，执行一下命令查看node版本： node -v 2. npmnpm是随同nodejs一起安装的包管理工具，能解决nodejs代码部署上的很多问题； 可以通过输入 npm -v 来测试是否安装成功 3. 创建vue项目 使用 npm 全局安装 vue-cli(最新) 1npm install -g @vue&#x2F;cli 查看现在的版本 1vue -V 创建一个项目">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C.png">
+<meta property="article:published_time" content="2022-05-18T02:20:02.000Z">
+<meta property="article:modified_time" content="2022-05-18T06:25:19.765Z">
+<meta property="article:author" content="wyq">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/DxsHello" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">柚子想睡觉</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">不求代码改变世界，只想提升自己</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京, 中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/DxsHello" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://github.com/DxsHello" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/18/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%90%8E%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="title">hexo搭建博客后图片无法显示的解决办法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-18T06:47:06.000Z" itemprop="datePublished">2022-05-18</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" class="title">vue3环境搭建及项目搭建</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-05-18T02:20:02.000Z" itemprop="datePublished">2022-05-18</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/11/Mac%20OS%E4%B8%8A%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E7%A8%8B/" class="title">Mac OS上搭建Hexo博客流程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-11T06:04:22.546Z" itemprop="datePublished">2022-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-vue环境搭建及项目搭建" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue3环境搭建及项目搭建
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" class="article-date">
+	  <time datetime="2022-05-18T02:20:02.000Z" itemprop="datePublished">2022-05-18</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/vue/" rel="tag">vue</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1. 安装node.js"></a>1. 安装node.js</h4><p>安装完毕之后，执行一下命令查看node版本：</p>
+<p>node -v</p>
+<h4 id="2-npm"><a href="#2-npm" class="headerlink" title="2. npm"></a>2. npm</h4><p>npm是随同nodejs一起安装的包管理工具，能解决nodejs代码部署上的很多问题；</p>
+<p>可以通过输入 npm -v 来测试是否安装成功</p>
+<h4 id="3-创建vue项目"><a href="#3-创建vue项目" class="headerlink" title="3. 创建vue项目"></a>3. 创建vue项目</h4><ul>
+<li><p>使用 npm 全局安装 vue-cli(最新)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @vue/cli</span><br></pre></td></tr></table></figure></li>
+<li><p>查看现在的版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue -V</span><br></pre></td></tr></table></figure></li>
+<li><p>创建一个项目</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create 项目名称不能用中文</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：不能用驼峰方式命名项目名称了，它会报错的，只能全小写</strong></p>
+</li>
+<li><p>选择预设(默认/手动设置)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Please</span> pick a <span class="attr">preset</span>: (<span class="title class_">Use</span> arrow keys)</span><br><span class="line">  testPreset ([<span class="title class_">Vue</span> <span class="number">3</span>] less, babel, router, vuex) </span><br><span class="line">  <span class="title class_">Default</span> ([<span class="title class_">Vue</span> <span class="number">3</span>] babel, eslint) </span><br><span class="line">  <span class="title class_">Default</span> ([<span class="title class_">Vue</span> <span class="number">2</span>] babel, eslint) </span><br><span class="line">❯ <span class="title class_">Manually</span> select features </span><br></pre></td></tr></table></figure>
+
+<p>移动上下键，选择最后一个Manually select features进行手动创建，按回车</p>
+</li>
+<li><p>选择需要安装的插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Check</span> the features needed <span class="keyword">for</span> your <span class="attr">project</span>: (<span class="title class_">Press</span> &lt;space&gt; to select, &lt;a&gt; to toggle all, &lt;i&gt; to invert selection, and &lt;enter&gt; to proceed)</span><br><span class="line"> ◉ <span class="title class_">Babel</span></span><br><span class="line"> ◯ <span class="title class_">TypeScript</span></span><br><span class="line"> ◯ <span class="title class_">Progressive</span> <span class="title class_">Web</span> <span class="title class_">App</span> (<span class="variable constant_">PWA</span>) <span class="title class_">Support</span></span><br><span class="line"> ◉ <span class="title class_">Router</span></span><br><span class="line"> ◉ <span class="title class_">Vuex</span></span><br><span class="line"> ◉ <span class="variable constant_">CSS</span> <span class="title class_">Pre</span>-processors</span><br><span class="line"> ◯ <span class="title class_">Linter</span> / <span class="title class_">Formatter</span></span><br><span class="line">❯◯ <span class="title class_">Unit</span> <span class="title class_">Testing</span></span><br><span class="line"> ◯ <span class="variable constant_">E2E</span> <span class="title class_">Testing</span></span><br></pre></td></tr></table></figure>
+
+<p>移动上下键，箭头指着时，按空格键选中所需要的，以上选择的是babel、router、vuex、css pre-processors这四个插件，按回车到下一步   </p>
+</li>
+<li><p>选择vue版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Choose</span> a version <span class="keyword">of</span> <span class="title class_">Vue</span>.<span class="property">js</span> that you want to start the project <span class="keyword">with</span> (<span class="title class_">Use</span> arrow keys)</span><br><span class="line">❯ <span class="number">3.</span>x </span><br><span class="line">  <span class="number">2.</span>x </span><br></pre></td></tr></table></figure></li>
+<li><p>是否按照history的方式创建路由，选择yes，回车下一步</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Use</span> history mode <span class="keyword">for</span> router? (<span class="title class_">Requires</span> proper server setup <span class="keyword">for</span> index fallback <span class="keyword">in</span> production) (Y/n) y</span><br></pre></td></tr></table></figure></li>
+<li><p>选择css预编译工具，选择less，回车下一步</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Pick</span> a <span class="variable constant_">CSS</span> pre-processor (<span class="title class_">PostCSS</span>, <span class="title class_">Autoprefixer</span> and <span class="variable constant_">CSS</span> <span class="title class_">Modules</span> are supported by <span class="keyword">default</span>): </span><br><span class="line">  <span class="title class_">Sass</span>/<span class="variable constant_">SCSS</span> (<span class="keyword">with</span> dart-sass) </span><br><span class="line">❯ <span class="title class_">Less</span> </span><br><span class="line">  <span class="title class_">Stylus</span> </span><br></pre></td></tr></table></figure></li>
+<li><p>想把的配置文件放在一个独立的配置文件中？还是放到package.json中？选择第一个，回车下一步</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Where</span> <span class="keyword">do</span> you prefer placing config <span class="keyword">for</span> <span class="title class_">Babel</span>, <span class="title class_">ESLint</span>, etc.? (<span class="title class_">Use</span> arrow keys)</span><br><span class="line">❯ <span class="title class_">In</span> dedicated config files </span><br><span class="line">  <span class="title class_">In</span> package.<span class="property">json</span> </span><br></pre></td></tr></table></figure></li>
+<li><p>是否保存预设并用到以后的项目中，选择yes，回车下一步</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Save</span> <span class="variable language_">this</span> <span class="keyword">as</span> a preset <span class="keyword">for</span> future projects? (y/N) yes</span><br></pre></td></tr></table></figure></li>
+<li><p>保存的预设名称是什么，设为testPreset，回车下一步</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Save</span> preset <span class="attr">as</span>: testPreset</span><br></pre></td></tr></table></figure></li>
+<li><p>选择安装工具，回车下一步直到安装完成。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Pick</span> the package manager to use when installing <span class="attr">dependencies</span>: <span class="variable constant_">NPM</span></span><br></pre></td></tr></table></figure></li>
+<li><p>运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd 项目名称</span><br><span class="line">npm run serve</span><br></pre></td></tr></table></figure></li>
+<li><p>最终全部结果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">? <span class="title class_">Please</span> pick a <span class="attr">preset</span>: <span class="title class_">Manually</span> select features</span><br><span class="line">? <span class="title class_">Check</span> the features needed <span class="keyword">for</span> your <span class="attr">project</span>: <span class="title class_">Babel</span>, <span class="title class_">Router</span>, <span class="title class_">Vuex</span>, <span class="variable constant_">CSS</span> <span class="title class_">Pre</span>-processors</span><br><span class="line">? <span class="title class_">Choose</span> a version <span class="keyword">of</span> <span class="title class_">Vue</span>.<span class="property">js</span> that you want to start the project <span class="keyword">with</span> <span class="number">3.</span>x</span><br><span class="line">? <span class="title class_">Use</span> history mode <span class="keyword">for</span> router? (<span class="title class_">Requires</span> proper server setup <span class="keyword">for</span> index fallback <span class="keyword">in</span> production) <span class="title class_">Yes</span></span><br><span class="line">? <span class="title class_">Pick</span> a <span class="variable constant_">CSS</span> pre-processor (<span class="title class_">PostCSS</span>, <span class="title class_">Autoprefixer</span> and <span class="variable constant_">CSS</span> <span class="title class_">Modules</span> are supported by <span class="keyword">default</span>): <span class="title class_">Less</span></span><br><span class="line">? <span class="title class_">Where</span> <span class="keyword">do</span> you prefer placing config <span class="keyword">for</span> <span class="title class_">Babel</span>, <span class="title class_">ESLint</span>, etc.? <span class="title class_">In</span> dedicated config files</span><br><span class="line">? <span class="title class_">Save</span> <span class="variable language_">this</span> <span class="keyword">as</span> a preset <span class="keyword">for</span> future projects? <span class="title class_">Yes</span></span><br><span class="line">? <span class="title class_">Save</span> preset <span class="attr">as</span>: testPreset</span><br><span class="line">? <span class="title class_">Pick</span> the package manager to use when installing <span class="attr">dependencies</span>: <span class="variable constant_">NPM</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="4-结果"><a href="#4-结果" class="headerlink" title="4. 结果"></a>4. 结果</h4><p>运行地址，出现如下页面：</p>
+<p><img src="/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C.png" alt="最终结果"></p>
+<h4 id="5-特别注意事项"><a href="#5-特别注意事项" class="headerlink" title="5. 特别注意事项"></a>5. 特别注意事项</h4><p><strong>在mac上安装会报错Error: EACCES: permission denied, access ‘/usr/local/lib/node_modules</strong></p>
+<p>原因：执行命令时没有获得管理员权限</p>
+<p>解决办法：在命令行前面添加sudo获取管理员权限</p>
+<p>例如原来的为：npm install -g vue-cli</p>
+<p>应该改为：sudo npm install -g vue-cli </p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2022/05/18/vue%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" title="vue3环境搭建及项目搭建" target="_blank" rel="external">http://example.com/2022/05/18/vue环境搭建及项目搭建/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/DxsHello" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/DxsHello" target="_blank"><span class="text-dark">柚子想睡觉</span><small class="ml-1x">不求代码改变世界，只想提升自己</small></a></h3>
+        <div>致力于网站建设与前端用户体验设计</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/05/18/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%90%8E%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="hexo搭建博客后图片无法显示的解决办法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/03/11/Mac%20OS%E4%B8%8A%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E7%A8%8B/" title="Mac OS上搭建Hexo博客流程"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/DxsHello" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://github.com/DxsHello" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2022 wyq
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
