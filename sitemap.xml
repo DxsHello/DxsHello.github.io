@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2022/05/19/Vue%E4%B8%AD%E7%9A%84Cannot-GET-xxx/</loc>
+    
+    <lastmod>2022-05-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/2022/03/11/Mac%20OS%E4%B8%8A%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E6%B5%81%E7%A8%8B/</loc>
     
     <lastmod>2022-05-18</lastmod>
@@ -102,6 +111,13 @@
   
   <url>
     <loc>http://example.com/tags/hexo/</loc>
+    <lastmod>2022-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/Vue/</loc>
     <lastmod>2022-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

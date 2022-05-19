@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>柚子想睡觉</title>
   
   
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-05-18T07:10:47.840Z</updated>
+  <updated>2022-05-19T07:49:55.861Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue中的Cannot GET/xxx</title>
+    <link href="http://example.com/2022/05/19/Vue%E4%B8%AD%E7%9A%84Cannot-GET-xxx/"/>
+    <id>http://example.com/2022/05/19/Vue%E4%B8%AD%E7%9A%84Cannot-GET-xxx/</id>
+    <published>2022-05-19T07:16:23.000Z</published>
+    <updated>2022-05-19T07:49:55.861Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>场景</strong></p><ul><li>Vue3</li><li>模式：单页面应用（SPA）模式</li><li>路由模式：history</li></ul><p><strong>问题一：</strong>刷新页面，出现Cannot GET / xxx</p><p><img src="/2022/05/19/Vue%E4%B8%AD%E7%9A%84Cannot-GET-xxx/%E9%97%AE%E9%A2%98%E4%B8%80.png" alt="问题一"></p><p><strong>解决办法：</strong>设置<code>historyApiFallback: true</code></p><blockquote><p>webpack.config.js</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;  </span><br><span class="line">   ...  </span><br><span class="line">   historyApiFallback: true  </span><br><span class="line">   ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>问题二：</strong>在问题一解决的基础上增加代理（proxy）配置，刷新页面，再次出现 <code>Cannot GET / xxx</code>问题，并且控制台还有404报错信息</p><ul><li><p><strong>基础配置</strong></p><blockquote><p>webpack.config.js</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">  ...</span><br><span class="line">  historyApiFallback: true,</span><br><span class="line">  proxy: &#123;</span><br><span class="line">    &#x27;/&#x27;: &#123;</span><br><span class="line">      target: &#x27;http://localhost:3000&#x27;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p><strong>问题</strong><br><img src="/2022/05/19/Vue%E4%B8%AD%E7%9A%84Cannot-GET-xxx/%E9%97%AE%E9%A2%98%E4%BA%8C.png" alt="问题一"></p></li><li><p><strong>解决办法</strong>：<code>bypass</code></p><blockquote><p>webpack.config.js</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">  ...</span><br><span class="line">  historyApiFallback: true,</span><br><span class="line">  proxy: &#123;</span><br><span class="line">    &#x27;/&#x27;: &#123;</span><br><span class="line">      target: &#x27;http://localhost:3000&#x27;,</span><br><span class="line">      bypass: function (req, res, proxyOptions) &#123;</span><br><span class="line">        if (req.headers.accept.indexOf(&#x27;html&#x27;) !== -1) &#123;</span><br><span class="line">          return &#x27;index.html&#x27;; // SPA，只有一个html页面，所有都返回index.html页面</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;场景&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Vue3&lt;/li&gt;
+&lt;li&gt;模式：单页面应用（SPA）模式&lt;/li&gt;
+&lt;li&gt;路由模式：history&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;问题一：&lt;/strong&gt;刷新页面，出现Cannot GET</summary>
+      
+    
+    
+    
+    
+    <category term="Vue" scheme="http://example.com/tags/Vue/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo搭建博客后图片无法显示的解决办法</title>
