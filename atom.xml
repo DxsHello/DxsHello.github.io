@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-05-19T07:49:55.861Z</updated>
+  <updated>2022-05-25T07:41:03.128Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>js实现文件导出、文件下载</title>
+    <link href="http://example.com/2022/05/25/js%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E3%80%81%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/"/>
+    <id>http://example.com/2022/05/25/js%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E3%80%81%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</id>
+    <published>2022-05-25T07:36:29.000Z</published>
+    <updated>2022-05-25T07:41:03.128Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p><strong>通过创建a标签，实现下载功能</strong></p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">downLoad</span>(<span class="params">content,fileName</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> aEle = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 创建a标签</span></span><br><span class="line">        <span class="comment">// blob = new Blob([content]); </span></span><br><span class="line">        aEle.<span class="property">download</span> = fileName;  <span class="comment">// 设置下载文件的文件名</span></span><br><span class="line">        <span class="comment">// aEle.href = URL.createObjectUrl(blob);</span></span><br><span class="line">        aEle.<span class="property">href</span> = content;  <span class="comment">// content为后台返回的下载地址</span></span><br><span class="line">        aEle.<span class="title function_">click</span>();  <span class="comment">// 设置点击事件</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> <span class="variable constant_">URL</span> =<span class="string">&#x27;XXXX&#x27;</span> <span class="comment">//下载地址</span></span><br><span class="line"><span class="title function_">downLoad</span>(<span class="variable constant_">URL</span> ,<span class="string">&#x27;test.xlxs&#x27;</span>)</span><br></pre></td></tr></table></figure><p>如果content非下载地址，而是下载的内容。实现代码微调即可。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">downLoad</span>(<span class="params">content,fileName</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> aEle = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 创建a标签</span></span><br><span class="line">        blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([content]); </span><br><span class="line">        aEle.<span class="property">download</span> = fileName;  <span class="comment">// 设置下载文件的文件名</span></span><br><span class="line">        aEle.<span class="property">href</span> = <span class="variable constant_">URL</span>.<span class="title function_">createObjectUrl</span>(blob);</span><br><span class="line">        aEle.<span class="title function_">click</span>();  <span class="comment">// 设置点击事件</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">downLoad</span>(<span class="string">&#x27;下载内容123123&#x27;</span>,<span class="string">&#x27;test.txt&#x27;</span>)</span><br></pre></td></tr></table></figure></li><li><p><strong>通过H5的download方法</strong></p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">downFile</span>(<span class="params">content, filename</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ele = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;a&#x27;</span>);  <span class="comment">// 创建下载链接</span></span><br><span class="line">    ele.<span class="property">download</span> = filename;  <span class="comment">//设置下载的名称</span></span><br><span class="line">    ele.<span class="property">style</span>.<span class="property">display</span> = <span class="string">&#x27;none&#x27;</span>;  <span class="comment">// 隐藏的可下载链接</span></span><br><span class="line">    <span class="comment">// 字符内容转变成blob地址</span></span><br><span class="line">    <span class="keyword">var</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([content]);</span><br><span class="line">    ele.<span class="property">href</span> = <span class="variable constant_">URL</span>.<span class="title function_">createObjectURL</span>(blob);</span><br><span class="line">    <span class="comment">// 绑定点击时间</span></span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(ele);</span><br><span class="line">    ele.<span class="title function_">click</span>();</span><br><span class="line">    <span class="comment">// 然后移除</span></span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">removeChild</span>(ele);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;通过创建a标签，实现下载功能&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1</summary>
+      
+    
+    
+    
+    
+    <category term="文件导出、下载" scheme="http://example.com/tags/%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E3%80%81%E4%B8%8B%E8%BD%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>网站及资源</title>
+    <link href="http://example.com/2022/05/25/%E7%BD%91%E7%AB%99%E5%8F%8A%E8%B5%84%E6%BA%90/"/>
+    <id>http://example.com/2022/05/25/%E7%BD%91%E7%AB%99%E5%8F%8A%E8%B5%84%E6%BA%90/</id>
+    <published>2022-05-25T06:01:32.000Z</published>
+    <updated>2022-05-26T02:40:24.393Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong><a href="https://github.com/DxsHello">自己的github地址</a></strong></p><p><strong>框架：</strong></p><p><a href="https://v3.cn.vuejs.org/">VUE</a>（渐进式JavaScript框架）</p><p><a href="https://www.nuxtjs.cn/">NUXT.JS</a>（Vue.js通用应用框架）</p><p><a href="https://element.eleme.cn/#/zh-CN">Element</a>（基于Vue 2.0）、<a href="https://element-plus.org/zh-CN/#/zh-CN">Element Plus</a>（基于Vue3）</p><p><a href="http://datav.jiaminghi.com/">DataV</a>（vue大屏数据展示组件库）</p><p><a href="https://vitejs.cn/guide/">Vite</a>（一种新型前端构建工具）</p><p><a href="https://v5.bootcss.com/">Bootstrap</a></p><p><a href="https://select2.org/">Select2</a>（是JQuery-based替换选择框，它支持搜索、远程数据集和结果分页。）</p><p><a href="https://adminlte.io/">AdminLTE</a>（最佳开源管理仪表板和控制面板主题。AdminLTE建立在Bootstrap之上，提供了一系列响应迅速、可重用和常用的组件。）</p><p><a href="https://www.zeptojs.com.cn/">Zepto.js</a>（API 中文版）</p><p><a href="http://ruoyi.vip/">若依管理系统</a>（基于SpringBoot、Shiro、Mybatis的权限后台管理系统）</p><p><a href="https://www.tailwindcss.cn/">tailwindcss</a>（通用的类CSS框架）</p><p><strong>开源网站：</strong></p><p><a href="https://www.wangeditor.com/">wangEditor</a>（开源Web富文本编辑器）</p><p><a href="https://echarts.apache.org/zh/">Apache ECharts（</a>一个基于JavaScript的开源可视化图表库）</p><p><a href="https://door.casdoor.com/">Casdoor</a>（一个增删改查的网页）</p><p><a href="https://cdn.baomitu.com/">静态资源托管库</a>（前端静态资源库）</p><p><strong>插件：</strong></p><p><a href="http://datatables.club/">Datatables</a>（一款jquery表格插件。是一个高度灵活的工具，可以将任何HTML表格添加高级的交互功能。）</p><p><a href="https://multiple-select.wenzhixin.net.cn/">Multiple Select</a>（多选。是一个JQuery插件，可以用复选框选择多个元素。）</p><p><a href="https://bootstrap-datepicker.readthedocs.io/en/latest/#">bootstrap-datepicker</a>（是一款Bootstrap日期选择器插件。该日期选择器插件支持多种语言,可通过配置参数设置日期选择器,日期范围选择器等,功能非常强大。）</p><p><a href="https://daterangepicker.com/">daterangepicker</a>（是Bootstrap的一个时间组件,使用很方便用于选择日期范围的JavaScript组件。 设计用于Bootstrap CSS框架。它最初是为了改善报表而创建的,它可以连接到任何网页元素,弹出两个日历,用于选择日期、时间或从预定义的范围,如“最后30天“。）</p><p><a href="https://www.jq22.com/">JQuery插件库</a></p><p><a href="https://tool.lu/timestamp/">时间戳转换工具</a></p><p><a href="https://www.gaituya.com/ps/">Photopea</a>（在线图像编辑器）</p><p><a href="http://www.jqueryfuns.com/resource/view/2288">html5时间轴插件</a></p><p><a href="http://www.bootstrapmb.com/item/2028">JQuery横向时间轴插件timeline</a></p><p><strong>资源 ：</strong></p><p><a href="http://hao.shejidaren.com/index.html"><strong>设计导航</strong></a>（分享优质设计网站及资源，提升设计师们的知识与阅历。分三大类：Web/UI、建筑/室内、设计书籍）</p><p><a href="https://cssdeck.com/">HTML5、CSS3、JS Demos各种特效</a></p><p><a href="http://www.bootstrapmb.com/tag/anniubiankuang">CSS3按钮边框特效</a></p><p><a href="https://www.processon.com/">免费在线流程图思维导图</a></p><p><a href="https://www.dute.org/ico-converter">ico图标制作</a></p><p><strong>工具：</strong></p><p><a href="https://unbug.github.io/codelf/">CODELT</a>（变量命名神器）</p><p><a href="https://tool.lu/">在线工具</a>（基于Web网页的各类小工具软件）</p><p><a href="https://bazhan.wang/">在线扒站工具</a>（一键将指定的网页的HTML、CSS、JS等前端资源打包下载）</p><p><a href="https://colorhunt.co/">Color Hunt</a>（调色板）</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/DxsHello&quot;&gt;自己的github地址&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;框架：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://v3.cn.vuejs.or</summary>
+      
+    
+    
+    
+    
+    <category term="资源" scheme="http://example.com/tags/%E8%B5%84%E6%BA%90/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue中的Cannot GET/xxx</title>
