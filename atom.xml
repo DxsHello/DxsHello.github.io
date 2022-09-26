@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-17T01:40:23.662Z</updated>
+  <updated>2022-09-26T07:27:31.011Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>js对接后台导出Excel并自定义表头</title>
+    <link href="http://example.com/2022/09/26/js%E5%AF%B9%E6%8E%A5%E5%90%8E%E5%8F%B0%E5%AF%BC%E5%87%BAExcel%E5%B9%B6%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A1%A8%E5%A4%B4/"/>
+    <id>http://example.com/2022/09/26/js%E5%AF%B9%E6%8E%A5%E5%90%8E%E5%8F%B0%E5%AF%BC%E5%87%BAExcel%E5%B9%B6%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A1%A8%E5%A4%B4/</id>
+    <published>2022-09-26T06:24:07.000Z</published>
+    <updated>2022-09-26T07:27:31.011Z</updated>
+    
+    <content type="html"><![CDATA[<p>javascript项目中，对接后台接口，通过后台返回的数据导出为Excel文件，并且根据返回的字段自定义对应的表头</p><h6 id="1-html结构"><a href="#1-html结构" class="headerlink" title="1. html结构"></a>1. html结构</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&#x27;btn btn-sm btn-success&#x27;</span> <span class="attr">onclick</span>=<span class="string">&quot;exportExcel()&quot;</span>&gt;</span>一键导出所有明细Excel<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure><h6 id="2-发送请求"><a href="#2-发送请求" class="headerlink" title="2. 发送请求"></a>2. 发送请求</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">exportExcel</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;/export_excel&#x27;</span>,</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">5000</span></span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> fieids = [<span class="string">&quot;name&quot;</span>, <span class="string">&quot;sex&quot;</span>, <span class="string">&quot;age&quot;</span>];</span><br><span class="line">    <span class="keyword">const</span> titles = &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;姓名&#x27;</span>,</span><br><span class="line">      <span class="attr">sex</span>: <span class="string">&#x27;性别&#x27;</span>,</span><br><span class="line">      <span class="attr">age</span>: <span class="string">&#x27;年龄&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 新建空workbook，然后加入worksheet</span></span><br><span class="line">    <span class="keyword">const</span> worksheet = <span class="variable constant_">XLSX</span>.<span class="property">utils</span>.<span class="title function_">json_to_sheet</span>(res.<span class="property">data</span>, &#123;<span class="attr">header</span>: fieids&#125;);</span><br><span class="line">    <span class="comment">// 获取数量</span></span><br><span class="line">    <span class="keyword">const</span> range = <span class="variable constant_">XLSX</span>.<span class="property">utils</span>.<span class="title function_">decode_range</span>(worksheet[<span class="string">&#x27;!ref&#x27;</span>]);</span><br><span class="line">    <span class="comment">// 循环</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> c = range.<span class="property">s</span>.<span class="property">c</span>; c &lt;= range.<span class="property">e</span>.<span class="property">c</span>; c++) &#123;</span><br><span class="line">      <span class="keyword">const</span> header = <span class="variable constant_">XLSX</span>.<span class="property">utils</span>.<span class="title function_">encode_col</span>(c) + <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">      worksheet[header].<span class="property">v</span> = titles[worksheet[header].<span class="property">v</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 新建book</span></span><br><span class="line">    <span class="keyword">const</span> workbook = <span class="variable constant_">XLSX</span>.<span class="property">utils</span>.<span class="title function_">book_new</span>();</span><br><span class="line">    <span class="comment">// 生成xlsx文件(book，sheet数据，sheet命名)</span></span><br><span class="line">    <span class="variable constant_">XLSX</span>.<span class="property">utils</span>.<span class="title function_">book_append_sheet</span>(workbook, worksheet, <span class="string">&#x27;详情&#x27;</span>);</span><br><span class="line">    <span class="comment">// 写文件(book，xlsx文件名称)</span></span><br><span class="line">    <span class="variable constant_">XLSX</span>.<span class="title function_">writeFile</span>(workbook, <span class="string">&quot;excel文件的名称.xlsx&quot;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h6 id="3-注意事项-引入js文件"><a href="#3-注意事项-引入js文件" class="headerlink" title="3. 注意事项-引入js文件"></a>3. 注意事项-引入js文件</h6><blockquote><p>axios.js</p><p>axios.min.js.map</p><p>xlsx.core.min.js</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;javascript项目中，对接后台接口，通过后台返回的数据导出为Excel文件，并且根据返回的字段自定义对应的表头&lt;/p&gt;
+&lt;h6 id=&quot;1-html结构&quot;&gt;&lt;a href=&quot;#1-html结构&quot; class=&quot;headerlink&quot; title=&quot;1. html结构&quot;</summary>
+      
+    
+    
+    
+    
+    <category term="对接后台导出数据" scheme="http://example.com/tags/%E5%AF%B9%E6%8E%A5%E5%90%8E%E5%8F%B0%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>vue3通过后台返回数据流，vue项目中导出excel</title>

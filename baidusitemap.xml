@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://example.com/2022/09/26/js%E5%AF%B9%E6%8E%A5%E5%90%8E%E5%8F%B0%E5%AF%BC%E5%87%BAExcel%E5%B9%B6%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A1%A8%E5%A4%B4/</loc>
+    <lastmod>2022-09-26</lastmod>
+  </url>
+  <url>
     <loc>http://example.com/2022/08/17/vue3%E9%80%9A%E8%BF%87%E5%90%8E%E5%8F%B0%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE%E6%B5%81%EF%BC%8Cvue%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%AF%BC%E5%87%BAexcel/</loc>
     <lastmod>2022-08-17</lastmod>
   </url>
