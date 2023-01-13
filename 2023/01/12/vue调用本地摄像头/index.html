@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>vue调用本地摄像头 | Hexo</title>
+  <meta name="description" content="关于如何调用本地摄像头的问题不管是在vue项目里还是在其它项目当中，它都是window的对象。 重点提示： 调用摄像头时，会遇到getUserMedia is not implemented in this browser报错问题，一般为以下两方面：  由于调用摄像头有使用权限，只能在本地运行，线上需要https域名才可以使用。  客户端浏览器手动指定域名安全  使用谷歌内核的浏览器输入url：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue调用本地摄像头">
+<meta property="og:url" content="https://github.com/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/index.html">
+<meta property="og:site_name" content="柚子想睡觉">
+<meta property="og:description" content="关于如何调用本地摄像头的问题不管是在vue项目里还是在其它项目当中，它都是window的对象。 重点提示： 调用摄像头时，会遇到getUserMedia is not implemented in this browser报错问题，一般为以下两方面：  由于调用摄像头有使用权限，只能在本地运行，线上需要https域名才可以使用。  客户端浏览器手动指定域名安全  使用谷歌内核的浏览器输入url：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/DxsHello/DxsHello.github.io/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/%E8%B0%83%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%A5%E9%94%99%E6%8F%90%E7%A4%BA.png">
+<meta property="article:published_time" content="2023-01-12T07:43:09.000Z">
+<meta property="article:modified_time" content="2023-01-13T07:03:30.083Z">
+<meta property="article:author" content="wyq">
+<meta property="article:tag" content="摄像头">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/DxsHello/DxsHello.github.io/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/%E8%B0%83%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%A5%E9%94%99%E6%8F%90%E7%A4%BA.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://github.com/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="柚子想睡觉" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/DxsHello/DxsHello.github.io/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="/DxsHello/DxsHello.github.io/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">柚子想睡觉</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">前端开发</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京, 中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/DxsHello/DxsHello.github.io/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/DxsHello/DxsHello.github.io/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/DxsHello/DxsHello.github.io/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/DxsHello/DxsHello.github.io/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/DxsHello/DxsHello.github.io/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/DxsHello/DxsHello.github.io" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/Vue/" rel="tag">Vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/vue/" rel="tag">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/vue3%E5%AF%BC%E5%87%BAexcel%E6%96%87%E4%BB%B6%E6%B5%81/" rel="tag">vue3导出excel文件流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/%E5%AF%B9%E6%8E%A5%E5%90%8E%E5%8F%B0%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE/" rel="tag">对接后台导出数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/%E6%8B%96%E6%8B%BD%E5%BC%8FVue%E7%BB%84%E4%BB%B6%E3%80%81%E8%A1%A8%E5%8D%95%E8%AE%BE%E8%AE%A1%E5%99%A8/" rel="tag">拖拽式Vue组件、表单设计器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" rel="tag">摄像头</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E3%80%81%E4%B8%8B%E8%BD%BD/" rel="tag">文件导出、下载</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/DxsHello/DxsHello.github.io/tags/%E8%B5%84%E6%BA%90/" rel="tag">资源</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/DxsHello/DxsHello.github.io/tags/Vue/" style="font-size: 13px;">Vue</a> <a href="/DxsHello/DxsHello.github.io/tags/git/" style="font-size: 13px;">git</a> <a href="/DxsHello/DxsHello.github.io/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/DxsHello/DxsHello.github.io/tags/vue/" style="font-size: 13px;">vue</a> <a href="/DxsHello/DxsHello.github.io/tags/vue3%E5%AF%BC%E5%87%BAexcel%E6%96%87%E4%BB%B6%E6%B5%81/" style="font-size: 13px;">vue3导出excel文件流</a> <a href="/DxsHello/DxsHello.github.io/tags/%E5%AF%B9%E6%8E%A5%E5%90%8E%E5%8F%B0%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE/" style="font-size: 13px;">对接后台导出数据</a> <a href="/DxsHello/DxsHello.github.io/tags/%E6%8B%96%E6%8B%BD%E5%BC%8FVue%E7%BB%84%E4%BB%B6%E3%80%81%E8%A1%A8%E5%8D%95%E8%AE%BE%E8%AE%A1%E5%99%A8/" style="font-size: 13px;">拖拽式Vue组件、表单设计器</a> <a href="/DxsHello/DxsHello.github.io/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" style="font-size: 13px;">摄像头</a> <a href="/DxsHello/DxsHello.github.io/tags/%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E3%80%81%E4%B8%8B%E8%BD%BD/" style="font-size: 13px;">文件导出、下载</a> <a href="/DxsHello/DxsHello.github.io/tags/%E8%B5%84%E6%BA%90/" style="font-size: 13px;">资源</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/DxsHello/DxsHello.github.io/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/DxsHello/DxsHello.github.io/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/DxsHello/DxsHello.github.io/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/DxsHello/DxsHello.github.io/archives/2022/07/">七月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/DxsHello/DxsHello.github.io/archives/2022/05/">五月 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/DxsHello/DxsHello.github.io/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/" class="title">vue调用本地摄像头</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-01-12T07:43:09.000Z" itemprop="datePublished">2023-01-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/DxsHello/DxsHello.github.io/2022/09/26/js%E5%AF%B9%E6%8E%A5%E5%90%8E%E5%8F%B0%E5%AF%BC%E5%87%BAExcel%E5%B9%B6%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A1%A8%E5%A4%B4/" class="title">js对接后台导出Excel并自定义表头</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-26T06:24:07.000Z" itemprop="datePublished">2022-09-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/DxsHello/DxsHello.github.io/2022/08/17/vue3%E9%80%9A%E8%BF%87%E5%90%8E%E5%8F%B0%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE%E6%B5%81%EF%BC%8Cvue%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%AF%BC%E5%87%BAexcel/" class="title">vue3通过后台返回数据流，vue项目中导出excel</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-08-17T01:29:01.000Z" itemprop="datePublished">2022-08-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/DxsHello/DxsHello.github.io/2022/07/29/git-clone%E6%8A%A5%E9%94%99%E9%97%AE%E9%A2%98/" class="title">git clone报错问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-29T02:28:24.000Z" itemprop="datePublished">2022-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/DxsHello/DxsHello.github.io/2022/07/29/vue%E7%BB%84%E4%BB%B6%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90/" class="title">vue组件相关资源</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-29T02:03:26.000Z" itemprop="datePublished">2022-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-vue调用本地摄像头" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue调用本地摄像头
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/" class="article-date">
+	  <time datetime="2023-01-12T07:43:09.000Z" itemprop="datePublished">2023-01-12</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/DxsHello/DxsHello.github.io/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" rel="tag">摄像头</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="关于如何调用本地摄像头的问题"><a href="#关于如何调用本地摄像头的问题" class="headerlink" title="关于如何调用本地摄像头的问题"></a>关于如何调用本地摄像头的问题</h3><p>不管是在vue项目里还是在其它项目当中，它都是window的对象。</p>
+<p><strong>重点提示：</strong></p>
+<p>调用摄像头时，会遇到getUserMedia is not implemented in this browser报错问题，一般为以下两方面：</p>
+<ol>
+<li><p>由于调用摄像头有使用权限，只能在本地运行，线上需要https域名才可以使用。</p>
+</li>
+<li><p>客户端浏览器手动指定域名安全</p>
+<ul>
+<li><p>使用谷歌内核的浏览器输入url：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chrome://flags/#unsafely-treat-insecure-origin-as-secure</span><br></pre></td></tr></table></figure></li>
+<li><p>按步骤操作执行</p>
+<p><img src="/DxsHello/DxsHello.github.io/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/%E8%B0%83%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%A5%E9%94%99%E6%8F%90%E7%A4%BA.png" alt="调用摄像头浏览器报错提示"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><ol>
+<li>通过点击按钮（或进入页面直接调用函数）来调用函数，实现摄像头的调用。</li>
+<li>打开摄像头调用getCompetence()函数。</li>
+<li>获取媒体属性，旧版本浏览器可能不支持mediaDevices，我们首先设置一个空对象,使用getUserMedia，因为它会覆盖现有的属性。 这里，如果缺少getUserMedia属性，就添加它。我们需要一系列的判断,包括浏览器版本,或者srcObject,如果没有该属性那么就弃用它。</li>
+</ol>
+<h4 id="实现效果-代码"><a href="#实现效果-代码" class="headerlink" title="实现效果-代码"></a>实现效果-代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line"> &lt;div class=&quot;contentLeft&quot;&gt;</span><br><span class="line">     &lt;video ref=&quot;video&quot; autoplay id=&quot;v&quot;&gt;&lt;/video&gt;</span><br><span class="line">     &lt;canvas id=&quot;canvas&quot;&gt;&lt;/canvas&gt;&lt;br /&gt;</span><br><span class="line">     &lt;!-- &lt;el-button type=&quot;primary&quot; plain size=&quot;small&quot; @click=&quot;getCompetence()&quot;&gt;打开本地摄像头&lt;/el-button&gt; --&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123; ref, reactive, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line">  export default &#123;</span><br><span class="line">    name: &quot;test&quot;,</span><br><span class="line">    setup() &#123;</span><br><span class="line">      // 调用权限-打开摄像头功能</span><br><span class="line">        const getCompetence = () =&gt; &#123;</span><br><span class="line">            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象</span><br><span class="line">            if (navigator.mediaDevices === undefined) &#123;</span><br><span class="line">                navigator.mediaDevices = &#123;&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            if (navigator.mediaDevices.getUserMedia === undefined) &#123;</span><br><span class="line">                navigator.mediaDevices.getUserMedia = function (constraints) &#123;</span><br><span class="line">                  // 首先，如果有getUserMedia的话，就获得它</span><br><span class="line">                  var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;</span><br><span class="line"></span><br><span class="line">                  // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口</span><br><span class="line">                  if (!getUserMedia) &#123;</span><br><span class="line">                    return Promise.reject(new Error(&#x27;getUserMedia is not implemented in this browser&#x27;));</span><br><span class="line">                  &#125;</span><br><span class="line"></span><br><span class="line">                  // 否则，为老的navigator.getUserMedia方法包裹一个Promise</span><br><span class="line">                  return new Promise(function (resolve, reject) &#123;</span><br><span class="line">                    getUserMedia.call(navigator, constraints, resolve, reject);</span><br><span class="line">                  &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            const constraints = &#123;</span><br><span class="line">              video: true,</span><br><span class="line">              audio: false</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            let videoPlaying = false;</span><br><span class="line">            let v = document.getElementById(&#x27;v&#x27;);</span><br><span class="line">            let promise = navigator.mediaDevices.getUserMedia(constraints);</span><br><span class="line">            promise.then(stream =&gt; &#123;</span><br><span class="line">              // 旧的浏览器可能没有srcObject</span><br><span class="line">              if (&quot;srcObject&quot; in v) &#123;</span><br><span class="line">                v.srcObject = stream;</span><br><span class="line">              &#125; else &#123;</span><br><span class="line">                  // 防止再新的浏览器里使用它，应为它已经不再支持了</span><br><span class="line">                  v.src = window.URL.createObjectURL(stream);</span><br><span class="line">              &#125;</span><br><span class="line">              v.onloadedmetadata = function (e) &#123;</span><br><span class="line">                v.play();</span><br><span class="line">                videoPlaying = true;</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;).catch(err =&gt; &#123;</span><br><span class="line">              console.error(err.name + &quot;: &quot; + err.message);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        // 不用点击事件，直接调用摄像头方法 - 组织挂载完成后执行的函数</span><br><span class="line">        onMounted(() =&gt; &#123;</span><br><span class="line">          getCompetence();</span><br><span class="line">        &#125;);</span><br><span class="line">      </span><br><span class="line">      return &#123;</span><br><span class="line">        getCompetence, // 打开摄像头</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://github.com/DxsHello/DxsHello.github.io/2023/01/12/vue%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%91%84%E5%83%8F%E5%A4%B4/" title="vue调用本地摄像头" target="_blank" rel="external">https://github.com/DxsHello/DxsHello.github.io/2023/01/12/vue调用本地摄像头/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/DxsHello/DxsHello.github.io/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">柚子想睡觉</span><small class="ml-1x">前端开发</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/DxsHello/DxsHello.github.io/2022/09/26/js%E5%AF%B9%E6%8E%A5%E5%90%8E%E5%8F%B0%E5%AF%BC%E5%87%BAExcel%E5%B9%B6%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A1%A8%E5%A4%B4/" title="js对接后台导出Excel并自定义表头"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/DxsHello/DxsHello.github.io" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/DxsHello/DxsHello.github.io/js/plugin.min.js"></script>
+
+
+<script src="/DxsHello/DxsHello.github.io/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/DxsHello/DxsHello.github.io/',
+        CONTENT_URL: '/DxsHello/DxsHello.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/DxsHello/DxsHello.github.io/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
